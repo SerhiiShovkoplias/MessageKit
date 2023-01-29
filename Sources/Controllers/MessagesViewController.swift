@@ -318,7 +318,7 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
 
   // MARK: - Private methods
 
-  private func setupDefaults() {
+  open func setupDefaults() {
     extendedLayoutIncludesOpaqueBars = true
     view.backgroundColor = .collectionViewBackground
     messagesCollectionView.keyboardDismissMode = .interactive
@@ -343,7 +343,7 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     ])
   }
 
-  private func setupDelegates() {
+  open func setupDelegates() {
     messagesCollectionView.delegate = self
     messagesCollectionView.dataSource = self
   }
