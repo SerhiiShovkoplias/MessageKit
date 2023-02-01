@@ -86,11 +86,11 @@ extension MessagesViewController {
     let normalizedNewBottomInset = max(0, newBottomInset)
     let differenceOfBottomInset = newBottomInset - messageCollectionViewBottomInset
 
-    UIView.performWithoutAnimation {
-      guard differenceOfBottomInset != 0 else { return }
-      messagesCollectionView.contentInset.bottom = normalizedNewBottomInset
-      messagesCollectionView.verticalScrollIndicatorInsets.bottom = newBottomInset
-    }
+    UIView.animate(withDuration: CATransaction.animationDuration(), animations: {
+        guard differenceOfBottomInset != 0 else { return }
+        messagesCollectionView.contentInset.bottom = normalizedNewBottomInset
+        messagesCollectionView.verticalScrollIndicatorInsets.bottom = newBottomInset
+    })
   }
 
   // MARK: Private
