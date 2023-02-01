@@ -119,9 +119,8 @@ extension MessagesViewController {
     messagesCollectionView.contentInset.top
   }
 
-  // MARK: - Private methods
-
-  private func handleTextViewDidBeginEditing(_ notification: Notification) {
+  @objc
+  open func handleTextViewDidBeginEditing(_ notification: Notification) {
     guard
       scrollsToLastItemOnKeyboardBeginsEditing,
       let inputTextView = notification.object as? InputTextView,
