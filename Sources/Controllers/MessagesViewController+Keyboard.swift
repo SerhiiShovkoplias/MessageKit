@@ -50,9 +50,12 @@ extension MessagesViewController {
       .publisher(for: UITextView.textDidChangeNotification)
       .subscribe(on: DispatchQueue.global())
       .receive(on: DispatchQueue.main)
-      .compactMap { $0.object as? InputTextView }
+      .compactMap { $0.object as? InputTextViewProtocol }
       .filter { [weak self] textView in
-        textView == self?.messageInputBar.inputTextView
+        if let inputTextView = self?.messageInputBar.inputTextView {
+            return textView == inputTextView
+        }
+        return false
       }
       .map(\.text)
       .removeDuplicates()
@@ -88,8 +91,8 @@ extension MessagesViewController {
 
     UIView.animate(withDuration: CATransaction.animationDuration(), animations: {
         guard differenceOfBottomInset != 0 else { return }
-        messagesCollectionView.contentInset.bottom = normalizedNewBottomInset
-        messagesCollectionView.verticalScrollIndicatorInsets.bottom = newBottomInset
+        self.messagesCollectionView.contentInset.bottom = normalizedNewBottomInset
+        self.messagesCollectionView.verticalScrollIndicatorInsets.bottom = newBottomInset
     })
   }
 
@@ -119,11 +122,10 @@ extension MessagesViewController {
     messagesCollectionView.contentInset.top
   }
 
-  @objc
-  open func handleTextViewDidBeginEditing(_ notification: Notification) {
+  private func handleTextViewDidBeginEditing(_ notification: Notification) {
     guard
       scrollsToLastItemOnKeyboardBeginsEditing,
-      let inputTextView = notification.object as? InputTextView,
+      let inputTextView = notification.object as? InputTextViewProtocol,
       inputTextView === messageInputBar.inputTextView
     else {
       return

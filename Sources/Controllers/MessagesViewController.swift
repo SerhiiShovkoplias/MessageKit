@@ -25,6 +25,17 @@ import Foundation
 import InputBarAccessoryView
 import UIKit
 
+public protocol InputTextViewProtocol where Self: UITextView { }
+
+extension InputTextView: InputTextViewProtocol { }
+
+public protocol InputBarAccessoryViewProtocol where Self: UIView {
+    associatedtype InputTextViewType: InputTextViewProtocol
+    var inputTextView: InputTextViewType { get }
+}
+
+extension InputBarAccessoryView: InputBarAccessoryViewProtocol { }
+
 /// A subclass of `UIViewController` with a `MessagesCollectionView` object
 /// that is used to display conversation interfaces.
 open class MessagesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -41,7 +52,7 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
   open var messagesCollectionView = MessagesCollectionView()
 
   /// The `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
-  open lazy var messageInputBar = InputBarAccessoryView()
+  open lazy var messageInputBar: any InputBarAccessoryViewProtocol = InputBarAccessoryView()
 
   /// Display the date of message by swiping left.
   /// The default value of this property is `false`.
@@ -367,6 +378,9 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     case .messageInputBar:
       pinViewToInputContainer(messageInputBar)
     case .custom(let view):
+      if let inputAccessoryView = view as? (any InputBarAccessoryViewProtocol) {
+         self.messageInputBar = inputAccessoryView
+      }
       pinViewToInputContainer(view)
     }
   }
