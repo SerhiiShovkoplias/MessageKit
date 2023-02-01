@@ -141,7 +141,7 @@ open class MessagesCollectionView: UICollectionView {
   }
 
   /// Generically dequeues a cell of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
-  public func dequeueReusableCell<T: UICollectionViewCell>(_ cellClass: T.Type, for indexPath: IndexPath) -> T {
+  internal func dequeueReusableCell<T: UICollectionViewCell>(_ cellClass: T.Type, for indexPath: IndexPath) -> T {
     guard let cell = dequeueReusableCell(withReuseIdentifier: String(describing: T.self), for: indexPath) as? T else {
       fatalError("Unable to dequeue \(String(describing: cellClass)) with reuseId of \(String(describing: T.self))")
     }
@@ -149,7 +149,7 @@ open class MessagesCollectionView: UICollectionView {
   }
 
   /// Generically dequeues a header of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
-  public func dequeueReusableHeaderView<T: UICollectionReusableView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
+  internal func dequeueReusableHeaderView<T: UICollectionReusableView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
     let view = dequeueReusableSupplementaryView(
       ofKind: UICollectionView.elementKindSectionHeader,
       withReuseIdentifier: String(describing: T.self),
@@ -161,7 +161,7 @@ open class MessagesCollectionView: UICollectionView {
   }
 
   /// Generically dequeues a footer of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
-  public func dequeueReusableFooterView<T: UICollectionReusableView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
+  internal func dequeueReusableFooterView<T: UICollectionReusableView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
     let view = dequeueReusableSupplementaryView(
       ofKind: UICollectionView.elementKindSectionFooter,
       withReuseIdentifier: String(describing: T.self),
