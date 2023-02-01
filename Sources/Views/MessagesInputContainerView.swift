@@ -23,4 +23,18 @@
 import Foundation
 import UIKit
 
-public final class MessagesInputContainerView: UIView { }
+public final class MessagesInputContainerView: UIView {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if clipsToBounds || isHidden || alpha == 0 {
+            return nil
+        }
+
+        for subview in subviews.reversed() {
+            let subPoint = subview.convert(point, from: self)
+            if let result = subview.hitTest(subPoint, with: event) {
+                return result
+            }
+        }
+        return super.hitTest(point, with: event)
+    }
+}
