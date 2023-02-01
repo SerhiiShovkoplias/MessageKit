@@ -24,7 +24,7 @@ import Foundation
 import UIKit
 
 public final class MessagesInputContainerView: UIView {
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if clipsToBounds || isHidden || alpha == 0 {
             return nil
         }
