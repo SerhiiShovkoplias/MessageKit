@@ -22,7 +22,7 @@
 
 import Combine
 import Foundation
-import InputBarAccessoryView
+import HBInputBarAccessoryView
 import UIKit
 
 public protocol InputTextViewProtocol where Self: UITextView { }
