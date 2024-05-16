@@ -26,4 +26,5 @@ import UIKit
 public enum MessageInputBarKind: Equatable {
   case messageInputBar
   case custom(UIView)
+  case noInputBar
 }

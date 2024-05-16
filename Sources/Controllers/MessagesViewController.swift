@@ -346,9 +346,13 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     /// Constraints of inputContainerView are managed by keyboardManager
     inputContainerView.translatesAutoresizingMaskIntoConstraints = false
 
-    NSLayoutConstraint.activate([
+    let bottomOptionalConstraint = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    bottomOptionalConstraint.priority = .fittingSizeLevel
+   
+      NSLayoutConstraint.activate([
       messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
-      messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      messagesCollectionView.bottomAnchor.constraint(equalTo: inputContainerView.topAnchor),
+      bottomOptionalConstraint,
       messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
       messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
     ])
@@ -382,6 +386,10 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
          self.messageInputBar = inputAccessoryView
       }
       pinViewToInputContainer(view)
+    case .noInputBar:
+        let view = UIView()
+        pinViewToInputContainer(view)
+        break
     }
   }
 
