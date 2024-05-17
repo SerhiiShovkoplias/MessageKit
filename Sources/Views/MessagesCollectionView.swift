@@ -54,6 +54,8 @@ open class MessagesCollectionView: UICollectionView {
   open weak var messagesLayoutDelegate: MessagesLayoutDelegate?
 
   open weak var messageCellDelegate: MessageCellDelegate?
+    
+  open var onCollectionViewTap: (() -> Void)?
 
   open var isTypingIndicatorHidden: Bool {
     messagesCollectionViewFlowLayout.isTypingIndicatorViewHidden
@@ -71,7 +73,10 @@ open class MessagesCollectionView: UICollectionView {
     guard gesture.state == .ended else { return }
 
     let touchLocation = gesture.location(in: self)
-    guard let indexPath = indexPathForItem(at: touchLocation) else { return }
+    guard let indexPath = indexPathForItem(at: touchLocation) else {
+     onCollectionViewTap?()
+     return
+    }
 
     let cell = cellForItem(at: indexPath) as? MessageCollectionViewCell
     cell?.handleTapGesture(gesture)
