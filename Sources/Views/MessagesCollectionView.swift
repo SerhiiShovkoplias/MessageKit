@@ -225,6 +225,16 @@ open class MessagesCollectionView: UICollectionView {
   private func setupGestureRecognizers() {
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
     tapGesture.delaysTouchesBegan = true
+    tapGesture.delegate = self
     addGestureRecognizer(tapGesture)
   }
+}
+
+extension MessagesCollectionView: UIGestureRecognizerDelegate {
+  open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    if touch.view?.isKind(of: UIControl.self) == true {
+      return false
+    }
+      return true
+    }
 }
